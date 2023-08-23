@@ -1,0 +1,53 @@
+---
+title: "Laboratorio1"
+author: "Keneth Ruiz"
+date: "2023-08-09"
+output: flexdashboard::flex_dashboard
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(readxl)
+library(dplyr)
+library(flexdashboard)
+library(plotly)
+
+```
+
+```{r}
+# Definir la ruta completa al archivo CSV
+ruta_archivo <- "C:/Users/Keneth Ruiz/OneDrive/Documentos/GitHub/Data-Product/Lab1/tienda.csv"
+
+# Importar el archivo CSV
+datos_tienda <- read.csv(ruta_archivo)
+
+```
+
+```{r}
+# Calcular ventas totales por segmento
+ventas_por_segmento <- datos_tienda %>%
+  group_by(Segment) %>%
+  summarize(VentasTotales = sum(Sales))
+
+
+```
+
+```{r}
+ventas_por_segmento
+
+```
+```{r}
+# Crear el gráfico pie chart
+grafico_pie <- plot_ly(ventas_por_segmento, labels = ~Segment, values = ~VentasTotales, type = "pie")
+
+```
+
+```{r}
+# Mostrar el gráfico
+grafico_pie
+```
+
